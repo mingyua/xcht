@@ -1,0 +1,62 @@
+
+<div class="layui-fluid">
+	<div class="layui-row">
+		
+
+		<div class="layui-col-sm12">
+			<div id="headform"><span class="title">广告列表</span><button class="layui-btn f-r add" title="添加广告" dataurl="{:URL('ads/addads')}">添加广告</button></div>
+			<table class="layui-table layui-form">
+				<thead class="text-center ">
+					<th width="20"><input type="checkbox" lay-filter="checkall"  lay-skin="primary" /></th>
+					<th width="20">ID</th>
+					<th width="60">类型</th>
+					<th>地址</th>
+					<th>分类</th>
+					<th width="*">起止日期</th>
+					<th >状态</th>
+					<th width="150">操作</th>
+				</thead>
+				<tbody>
+					{empty  name="$adlist"}	
+					<tr><td colspan="8">
+						<div class="layui-col-sm12 ">
+							<h2 class="text-center red f-30"><i class="layui-icon layui-icon-cry" style="font-size: 40px;"></i><br>没有获取到数据</h2>
+						</div>
+						</td>
+					</tr>	
+					{/empty}
+					{volist name="adlist" id="v"}
+					<tr>
+						<td><input type="checkbox" name="allck[]" value="{$v.ID}"  lay-skin="primary" /></td>
+						<td>{$v.ID}</td>
+						<td> {eq name="$v.types" value="0"}<i class="fa fa-picture-o f-30"></i>{else/}<i class="fa fa-video-camera f-30"></i>{/eq}</td>
+						<td class="text-center">{$v.Ad_path}</td>
+						<td>{$v.ads.Ad_name}</td>
+						
+						<td class="text-center">{:times($v.Start_time,'Y-m-d H:i:s')}--{:times($v.End_time,'Y-m-d H:i:s')}</td>
+						<td class="text-center" width="80">							
+						      <input {eq name="$v.Ad_flag" value="1"}checked{/eq} name="Ad_flag" dataid="{$v.ID}" lay-skin="switch" lay-filter="switch" lay-text="启用|禁用" type="checkbox" class="pb-0 mb-0 mt-10 pt-0">						   					
+						</td>
+						<td class="text-center">
+						  <div class="layui-btn-group">
+						    <button class="layui-btn layui-btn-sm add" title="编辑广告" dataurl="{:URL('ads/addads',array('id'=>$v.ID))}">编辑</button>
+						    <button class="layui-btn layui-btn-sm layui-btn-danger del" arrid="{$v.ID}" dataurl="{:URL('ads/delads')}">删除</button>
+						  </div>
+						</td>
+					</tr>
+					{/volist}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="8" class="text-right">{$adlist->render()}</td>
+					</tr>
+				</tfoot>
+			</table>
+			
+			
+		</div>	
+	</div>
+</div>
+<script type="text/javascript">
+
+</script>

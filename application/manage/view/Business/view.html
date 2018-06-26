@@ -1,0 +1,21 @@
+<include file="Public:header" />
+<div class="container">
+	<div class="row" style="margin-top: 20px;padding: 20px;">
+		{volist name="list" id="v"}
+		<div class="layui-col-sm6 ">
+			
+		
+			<div class="md-5 pd-20 {eq name='$v.Statue' value='1'}layui-bg-green {else/}layui-bg-gray{/eq} ">
+				<h2 class="mb-10">{$v.store_name}</h2>
+				<p class="mb-10"><i class="fa fa-shopping-bag mr-5"></i>店铺编号：{$v.store_code}</p>
+				<p class="mb-10"><i class="fa fa-user mr-5"></i>联系人：{$v.Lianxir}</p>
+				<p class="mb-10"><i class="fa fa-home mr-5"></i>企业地址：{$v.Address}</p>
+				<p class="mb-10"><i class="fa fa-phone mr-5"></i>联系电话：{$v.TEL}</p>				
+			</div>
+			</div>
+		{/volist}
+		
+
+	</div>
+</div>
+<include file="Public:footer" />

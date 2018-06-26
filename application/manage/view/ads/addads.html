@@ -1,0 +1,141 @@
+<include file="Public:header" />
+<style>
+	#sele2{display: none;}
+</style>
+<div class="container">
+	<div class="row" style="margin-top: 20px;padding: 20px;">
+		<form class="layui-form layui-form-pane">
+			
+			<div class="layui-form-item">				
+			      <label class="layui-form-label"><font color="red" size="+2">*</font>分类选择</label>
+			      <div class="layui-input-inline">
+					 	<select name="type_id" class="layui-select">
+					 		{volist name="kinds" id="v"}
+					 		<option value="{$v.ID}">{$v.Ad_name}</option>
+					 		{/volist}
+					 	</select>
+			     </div>
+			</div>
+			
+		    <div class="layui-form-item">
+			    <label class="layui-form-label">上传类型</label>
+			    <div class="layui-input-block">
+			      <input name="types" value="1" title="视频"  type="radio" lay-filter="radio">
+			      <input name="types" value="0" title="图片"  checked="" lay-filter="radio" type="radio">
+			    </div>
+		    </div>
+		    <div class="layui-form-item">
+			    
+			    <div class="layui-input-block">
+			    	
+			    	<div id="sele1" >
+						<a type="button" class="layui-btn f-l" id="upimgs" onclick="upimg('#upimg');" ><i class="layui-icon"></i>上传图片</a>	
+						<input type="text" id="upimgImg" lay-verify="fileimg" name="imgpath" placeholder="可直接输入图片地址" class="layui-input f-l" style="width: 70%;" value="{$info.Ad_path|default=''}"/>			    		
+			    	</div>
+			    	<div id="sele2">
+						<a type="button" class="layui-btn f-l" id="upvideos" onclick="upimg('#upvideo');" ><i class="layui-icon"></i>上传视频</a>	
+						<input type="text" id="upvideoImg"  name="videopath" class="layui-input f-l" placeholder="可直接输入视频地址" style="width: 70%;" value="{$info.Ad_path|default=''}"/>			    		
+			    	</div>
+					
+					
+			    </div>
+		    </div>
+		    
+		    <div class="layui-form-item">
+			    <label class="layui-form-label">是否启用</label>
+			    <div class="layui-input-block">
+				    <input checked="" name="Ad_flag" lay-skin="switch"  value="1" lay-text="启用|禁用" type="checkbox">
+
+			    </div>
+		    </div>
+		    
+
+			<div class="layui-form-item">
+				<div class="layui-inline">
+			      <label class="layui-form-label">开始时间</label>
+			      <div class="layui-input-inline">
+			        <input id="starttime" name="Start_time" lay-verify="required" autocomplete="off" placeholder="请输入开始时间" class="layui-input" type="text" {notempty name="info.Start_time"} value="{:times($info.Start_time,'Y-m-d H:i:s')}"{else/}value="{:times('','Y-m-d H:i:s')}"{/notempty}>
+			      </div>
+			    </div>
+			    <div class="layui-inline">
+			      <label class="layui-form-label">结束时间</label>
+			      <div class="layui-input-inline">
+			        <input id="endtime" name="End_time" lay-verify="required" autocomplete="off" class="layui-input"  placeholder="请输入结束时间" type="text" {notempty name="info.End_time"}value="{:times($info.End_time,'Y-m-d H:i:s')}"{else/}value="{:times('','Y-m-d H:i:s')}"{/notempty}>
+			      </div>
+			    </div>
+			</div>
+			
+
+
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block text-center"><a class="layui-btn" lay-submit lay-filter="send" dataurl="{:URL('ads/addads')}">立即提交</a>  </div>
+			</div>
+					
+				{notempty name="info.ID"}
+					<input type="hidden" name="id" value="{$info.ID|default=''}" />			
+				{/notempty}
+
+		</form>			
+			<button id="upimg" class="layui-btn demoMore hidden" lay-data="{ url: '{:URL('upload/index')}' ,accept: 'file'}">图片上传</button>
+			<button id="upvideo" class="layui-btn demoMore hidden" lay-data="{ url: '{:URL('upload/index')}' ,accept: 'video'}">视频上传</button>
+	</div>
+</div>
+<script>
+
+	function upimg(obj){$(obj).click();};
+ layui.use(['laydate','form', 'layer'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,laydate = layui.laydate;
+ //监听指定开关
+  	form.on('radio(radio)', function(data){
+		if(data.value==1){
+			$('#sele1').hide();
+			$('#sele2').show();
+			$('#upimgImg').attr('lay-verify','');
+			$('#upimgImg').val('');
+			$('#upvideoImg').attr('lay-verify','fileimg');
+		}else{
+			$('#sele2').hide();
+			$('#sele1').show();
+			$('#upimgImg').attr('lay-verify','fileimg');
+			$('#upvideoImg').attr('lay-verify','');
+			$('#upvideoImg').val('');
+			
+		}
+	});
+     //开始日期
+    var insStart = laydate.render({
+      elem: '#starttime'
+      ,min: 0
+      ,type:'datetime'
+      ,done: function(value, date){
+        //更新结束日期的最小日期
+        insEnd.config.min = lay.extend({}, date, {
+          month: date.month - 1
+        });
+        
+        //自动弹出结束日期的选择器
+       insEnd.config.elem[0].focus();
+      }
+    });
+    
+    //结束日期
+    var insEnd = laydate.render({
+      elem: '#endtime'
+      ,min: 0
+      ,type:'datetime'
+      ,done: function(value, date){
+        //更新开始日期的最大日期
+        insStart.config.max = lay.extend({}, date, {
+          month: date.month - 1
+        });
+      }
+    }); 	
+	
+	
+ });
+</script>
+
+<include file="Public:footer" />

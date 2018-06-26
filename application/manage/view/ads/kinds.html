@@ -1,0 +1,42 @@
+<div class="layui-fluid">
+	<div class="layui-row" style="margin-top: 5px;">
+		<div class="layui-col-sm12">
+			<div id="headform"><span class="title">广告分类</span><button class="layui-btn f-r add" title="添加广告分类" dataurl="{:URL('ads/addkinds')}">添加分类</button></div>
+			<div class="layui-form">
+				<table class="layui-table">
+					<thead><tr>
+						<th width="40">ID</th>
+						<th width="*">广告名称</th>
+						<th width="80">间隔时长</th>
+						<th width="140">是否可用</th>
+						<th width="180">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+						{volist name="data" id="v"}
+						<tr>
+							<td>{$v.ID}</td>
+							<td>{$v.Ad_name}</td>
+							<td>{$v.Ad_long}</td>
+							<td>{eq name="$v.Ad_flag" value="1"}启用{else/}禁用{/eq}</td>
+							<td>
+
+								<a class="layui-btn layui-btn-xs add"  title="修改广告分类"    dataurl="{:URL('ads/addkinds',array('id'=>$v['ID']))}">编辑</a>
+								<a class="layui-btn layui-btn-danger layui-btn-xs del" arrid="{$v.ID}" dataurl="{:URL('ads/delkinds')}">删除</a>						
+							</td>
+						</tr>
+						{/volist}
+					</tbody>				
+					<tfoot>
+						<tr>
+							<td colspan="5" class="text-right">{$data->render()}</td>
+						</tr>
+					</tfoot>			
+				</table>
+ 				
+			</div>
+		</div>
+			
+	</div>		
+</div>
+

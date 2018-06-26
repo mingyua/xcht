@@ -1,0 +1,61 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__MANAGE__/js/pinying.js"></script>
+<div class="container">
+	<div class="row" style="margin-top: 20px;padding: 20px;">
+		<form class="layui-form layui-form-pane">
+			<div class="layui-col-sm9">
+			<div class="layui-form-item">
+				
+			      <label class="layui-form-label"><font color="red" size="+2">*</font>广告名称</label>
+			      <div class="layui-input-block">
+			        <input  name="Ad_name" onKeyUp="query()" lay-verify="required" autocomplete="off" placeholder="请输入广告名称" class="layui-input" type="text" value="{$info.Ad_name|default=''}">
+			     </div>
+			</div>
+
+			<div class="layui-form-item">				
+			      <label class="layui-form-label"><font color="red" size="+2">*</font>间隔时长</label>
+			      <div class="layui-input-block">
+			        <input name="Ad_long" lay-verify="required|number" autocomplete="off" placeholder="请输入间隔时长" class="layui-input" type="text" value="{$info.Ad_long|default=''}">
+			      </div>
+			</div>			
+
+			<div class="layui-form-item">				
+			      <label class="layui-form-label"><font color="red" size="+2">*</font>是否启用</label>
+			      <div class="layui-input-block">
+			        <input checked="" name="Ad_flag" lay-skin="switch" value="1"  lay-text="启用|禁用" type="checkbox">
+			      </div>
+			</div>			
+			<div class="layui-form-item">				
+			      <label class="layui-form-label"><font color="red" size="+2">*</font>显示店铺</label>
+			      <div class="layui-input-block">
+			      	 <input  lay-skin="primary" title="全选"  lay-filter="checkall" type="checkbox">
+			      	
+			      	{volist name="store" id="v"}
+			        <input name="allck[]" lay-skin="primary" title="{$v.store_name}" {$v.checked} value="{$v.store_code}" type="checkbox">
+			      	{/volist}
+			      </div>
+			</div>			
+
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block text-center"><a class="layui-btn" lay-submit lay-filter="send" dataurl="{:URL('ads/addkinds')}">立即提交</a>  </div>
+			</div>
+		
+				{notempty name="info.ID"}
+					<input type="hidden" name="ID" value="{$info.ID|default=''}" />			
+				{/notempty}
+
+		</form>			
+
+	</div>
+</div>
+
+
+<include file="Public:footer" />
+<script>
+	$(function(){
+		$('input[name=ckall]').click(function(){
+			alert('1111');
+		});
+	});
+</script>

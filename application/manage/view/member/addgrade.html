@@ -1,0 +1,40 @@
+<include file="Public:header" />
+<div class="container">
+	<div class="row" style="margin-top: 20px;padding: 20px;">
+		<form class="layui-form layui-form-pane">
+			<div class="layui-form-item"> <label class="layui-form-label"><font color="red" size="+2">*</font>等级名称</label>
+				<div class="layui-input-block"> <input name="number_class_name" autocomplete="off" placeholder="请输入会员等级名称" lay-verify="required" class="layui-input" type="text" value="{$info.number_class_name|default=''}"> </div>
+			</div>
+			<div class="layui-form-item"> <label class="layui-form-label"><font color="red" size="+2">*</font>会员折扣</label>
+				<div class="layui-input-block"> <input name="number_discount" autocomplete="off" lay-verify="required|number" placeholder="请输入本级别会员享受的折扣" class="layui-input" type="text" value="{$info.number_discount|default=''}"> </div>
+			</div>
+			<div class="layui-form-item"> <label class="layui-form-label"><font color="red" size="+2">*</font>升级介值</label>
+				<div class="layui-input-block"> <input name="up_amount" autocomplete="off" {notempty name="info.number_class"}disabled{/notempty} placeholder="积分累计到次数时，此会员的自动升级上一级别" lay-verify="required|number" class="layui-input" type="text" value="{$info.up_amount|default=''}"> </div>
+			</div>
+			<div class="layui-form-item">
+			<div class="layui-inline"> 
+				<label class="layui-form-label">自动升级</label>
+				  <input name="auto_up_flag" value="1" title="是" {if condition="($info.auto_up_flag eq '1') OR ($info.auto_up_flag eq '')"}checked="checked"{/if} type="radio">
+			      <input name="auto_up_flag" value="0" title="否" type="radio" {if condition="$info.auto_up_flag eq '0'"}checked="checked"{/if}>			
+			</div>
+			<div class="layui-inline"> 
+				<label class="layui-form-label">有效期</label>
+				  <input name="period_validity_flag" value="1" title="永久" {if condition="($info.period_validity_flag eq '1') OR ($info.period_validity_flag eq '')"}checked="checked"{/if} type="radio">
+			      <input name="period_validity_flag" value="0" title="一年" type="radio" {if condition="$info.period_validity_flag eq '0'"}checked="checked"{/if}>			
+			</div>
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-input-block"><a class="layui-btn" lay-submit lay-filter="send" dataurl="{:URL('member/addgrade')}">立即提交</a>  </div>
+			</div>
+			
+				{notempty name="info.number_class"}
+					<input type="hidden" name="id" value="{$info.number_class|default=''}" />			
+					<input type="hidden" name="number_class" value="{$info.number_class|default=''}" />			
+				{/notempty}
+			
+		</form>
+
+	</div>
+</div>
+<include file="Public:footer" />

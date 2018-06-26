@@ -1,0 +1,37 @@
+<include file="Public:header" />
+<div class="container">
+	<div class="row" style="margin-top: 20px;padding: 20px;">
+		<form class="layui-form layui-form-pane">
+			<div class="layui-form-item">				
+			      <label class="layui-form-label">微信KEY</label>
+			      <div class="layui-input-block">
+			        <input id="store_name" name="WXKey" lay-verify="required" autocomplete="off" placeholder="请输入微信KEY" class="layui-input" type="text" value="{$info.WXKey|default=''}">
+			      </div>			   
+			</div>
+			<div class="layui-form-item">				
+			      <label class="layui-form-label">支付宝KEY</label>
+			      <div class="layui-input-block">
+			        <input id="store_name" name="ZFBKey" lay-verify="required" autocomplete="off" placeholder="请输入支付宝KEY" class="layui-input" type="text" value="{$info.ZFBKey|default=''}">
+			      </div>			   
+			</div>
+			<div class="layui-form-item">				
+			      <label class="layui-form-label">备注</label>
+			      <div class="layui-input-block">
+			          <textarea name="remark" placeholder="请输入备注" class="layui-textarea">{$info.remark|default=''}</textarea>
+			      </div>			   
+			</div>
+
+			
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block text-center"><a class="layui-btn" lay-submit lay-filter="send" dataurl="{:URL('shop/payset')}">立即提交</a>  </div>
+			</div>
+				<input type="hidden" name="user_code" id="user_code" value="{$ucode}" />
+				<input type="hidden" name="store_code" id="store_code" value="{$scode}" />
+				<input type="hidden" name="edit" id="edit" value="{$info.store_code|default=''}" />
+		</form>			
+
+	</div>
+</div>
+
+<include file="Public:footer" />
